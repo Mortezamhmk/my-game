@@ -3,14 +3,17 @@ let secrtnumber = Math.trunc(Math.random() * 20) + 1;
 let score = 20;
 let highscore = 0;
 
-// ================= Functions =================
+// ==================== Functions ====================
 
 // نمایش پیام
 const displayMessage = function (message) {
   document.querySelector(".message").textContent = message;
 };
+const displayaylar = function (aylar) {
+  document.querySelector(".aylar").textContent = aylar;
+}
 
-// تغییر امتیاز
+// نمایش امتیاز
 const displayScore = function (score) {
   document.querySelector(".score").textContent = score;
 };
@@ -30,17 +33,23 @@ const changeNumberWidth = function (width) {
   document.querySelector(".number").style.width = width;
 };
 
-// ================= Game =================
+// نمایش بهترین امتیاز
+const displayHighscore = function (highscore) {
+  document.querySelector(".highscore").textContent = highscore;
+};
+
+// ==================== Game ====================
 
 document.querySelector(".check").addEventListener("click", function () {
   const guess = Number(document.querySelector(".guess").value);
 
   if (!guess) {
-    displayMessage("No Number!");
+    displayMessage("⛔ عددی وارد نکردی!");
 
   } else if (guess === secrtnumber) {
 
-    displayMessage("🎉 Correct!");
+    displayMessage("🎉 آفرین! درست حدس زدی.");
+    displayaylar('کیرم تو مغز خودم وایلار')
     displayNumber(secrtnumber);
 
     changeBackground("#265e3d");
@@ -48,7 +57,7 @@ document.querySelector(".check").addEventListener("click", function () {
 
     if (score > highscore) {
       highscore = score;
-      document.querySelector(".highscore").textContent = highscore;
+      displayHighscore(highscore);
     }
 
   } else {
@@ -56,7 +65,9 @@ document.querySelector(".check").addEventListener("click", function () {
     if (score > 1) {
 
       displayMessage(
-        guess > secrtnumber ? "📈 Too High!" : "📉 Too Low!"
+        guess > secrtnumber
+          ? "📈 عدد خیلی بزرگه!"
+          : "📉 عدد خیلی کوچیکه!"
       );
 
       score--;
@@ -64,24 +75,22 @@ document.querySelector(".check").addEventListener("click", function () {
 
     } else {
 
-      displayMessage("💥 You Lost!");
+      displayMessage("💥 باختی!");
       score = 0;
       displayScore(score);
 
     }
-
   }
-
 });
 
-// ================= Again Button =================
+// ==================== Again ====================
 
 document.querySelector(".again").addEventListener("click", function () {
 
   score = 20;
   secrtnumber = Math.trunc(Math.random() * 20) + 1;
 
-  displayMessage("Start guessing...");
+  displayMessage("🎯 شروع به حدس زدن کن...");
   displayScore(score);
   displayNumber("?");
 
